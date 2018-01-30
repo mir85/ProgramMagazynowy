@@ -1,61 +1,59 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Artykul {
 
     private String nazwaArtykulu;
     private double netto;
-    private int vat = 0;
-    private double brutto = netto * vat;
-
+    private double vat;
     private String grupaArtykulu;
+    private String jednostkaMagazynowa;
 
-    ArrayList<String> grupaArtykuluAL = new ArrayList<>();
+    public double getNetto() {
+        return netto;
+    }
+
+    public void setNetto(double netto) {
+        this.netto = netto;
+    }
+
+    public double getVat() {
+        return vat;
+    }
+
+    public void setVat(double vat) {
+        this.vat = vat;
+    }
 
     public String getGrupaArtykulu() {
-
-        if (!grupaArtykuluAL.contains(grupaArtykulu)){
-            System.out.println("Podaj poprawna grupe badz stworz nowa");
-        }
-        if (grupaArtykuluAL.contains(grupaArtykulu))
-        return grupaArtykulu;
         return grupaArtykulu;
     }
 
-    private String jednostkaMagazynowa;
+    public void setGrupaArtykulu(String grupaArtykulu) {
+        this.grupaArtykulu = grupaArtykulu;
+    }
 
-    public Artykul(String nazwaArtykulu, double netto, int vat, String grupaArtykulu, String jednostkaMagazynowa) {
+    public String getJednostkaMagazynowa() {
+        return jednostkaMagazynowa;
+    }
+
+    public void setJednostkaMagazynowa(String jednostkaMagazynowa) {
+        this.jednostkaMagazynowa = jednostkaMagazynowa;
+    }
+
+    public void setNazwaArtykulu(String nazwaArtykulu) {
+        this.nazwaArtykulu = nazwaArtykulu;
+    }
+
+    public String getNazwaArtykulu() {
+        return nazwaArtykulu;
+    }
+
+    public Artykul() {
         this.nazwaArtykulu = nazwaArtykulu;
         this.netto = netto;
         this.vat = vat;
         this.grupaArtykulu = grupaArtykulu;
         this.jednostkaMagazynowa = jednostkaMagazynowa;
     }
-
-    public void dodajArtykul(){
-        Scanner skaner = new Scanner(System.in);
-        System.out.println("Nazwa artykułu:");
-        nazwaArtykulu = skaner.nextLine();
-        System.out.println("Cena netto:");
-        netto = skaner.nextDouble();
-        System.out.println("Nazwa artykułu:");
-        vat = skaner.nextInt();
-        skaner.close();
-    }
-
-    public void dodajJednostkeMagazynowa(){
-        Scanner skaner = new Scanner(System.in);
-        String grupaArtykulow = skaner.nextLine();
-        grupaArtykuluAL.add(grupaArtykulow);
-        skaner.close();
-    }
-
-    /*public void dodajJednostke(){
-        Scanner skaner1 = new Scanner(System.in);
-        String jednostka = skaner1.nextLine();
-        jednostkaMagazynowa.add(jednostka);
-        skaner1.close();
-    }
-*/
 
 }
