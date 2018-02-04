@@ -6,7 +6,7 @@ public class Artykul {
     private String nazwaArtykulu;
     private double netto;
     private double vat;
-    private double brutto = netto * (1+(vat/100));
+    private double brutto;
     private String grupaArtykulu;
     private String jednostkaMagazynowa;
     private String sql;
@@ -17,19 +17,10 @@ public class Artykul {
         this.nazwaArtykulu = "";
         this.netto = 0;
         this.vat = 0;
+        this.brutto = 0;
         this.grupaArtykulu = "";
         this.jednostkaMagazynowa = "";
     }
-
-
-    /*public Artykul(String nazwaArtykulu, double netto, double vat, double brutto, String grupaArtykulu, String jednostkaMagazyno) {
-        this.nazwaArtykulu = nazwaArtykulu;
-        this.netto = netto;
-        this.vat = vat;
-        this.brutto = brutto;
-        this.grupaArtykulu = grupaArtykulu;
-        this.jednostkaMagazynowa = jednostkaMagazynowa;
-    }*/
 
     public void addArticle(){
 
@@ -57,7 +48,7 @@ public class Artykul {
 
 
 
-                sql = "INSERT INTO `artykul` (`nazwa`, `cena_netto`, `vat`, `cena_brutto`, `grupa_artykulow`, `jednostka`) VALUES ('" + nazwaArtykulu + "','" + netto + "','" + vat + "','" + brutto + "','" + grupaArtykulu + "','" + jednostkaMagazynowa + "');";
+                sql = "INSERT INTO `artykul` (`nazwa`, `cena_netto`, `vat`, `cena_brutto`, `grupa_artykulow`, `jednostka`) VALUES ('" + nazwaArtykulu + "','" + netto + "','" + vat + "','" + (brutto = netto * (1+(vat/100))) + "','" + grupaArtykulu + "','" + jednostkaMagazynowa + "');";
                 try {
                     stmt.executeUpdate(sql);
                     Artykul art = new Artykul();
@@ -125,21 +116,6 @@ public class Artykul {
                     art.nazwaArtykulu = nazwaArtykulu;
                     while (rsFA.next()) {
                         wyswietlDaneZBazy(rsFA);
-
-                        daneZBazy = rsFA.getString(1);
-                        System.out.print("id: " + daneZBazy + "  ");
-                        daneZBazy = rsFA.getString(2);
-                        System.out.print("Nazwa: " + daneZBazy + "  ");
-                        daneZBazy = rsFA.getString(3);
-                        System.out.print("Cena netto: " + daneZBazy + "  ");
-                        daneZBazy = rsFA.getString(4);
-                        System.out.print("VAT: " + daneZBazy + "  ");
-                        daneZBazy = rsFA.getString(5);
-                        System.out.print("Cena brutto: " + daneZBazy + "  ");
-                        daneZBazy = rsFA.getString(6);
-                        System.out.print("Grupa: " + daneZBazy + "  ");
-                        daneZBazy = rsFA.getString(7);
-                        System.out.print("Jednostka: " + daneZBazy);
                     }
                 } catch (SQLException e) {
                     System.out.println("Uwaga! Problem z odczytem danych " + e);
