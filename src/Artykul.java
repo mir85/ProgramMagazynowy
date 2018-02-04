@@ -6,7 +6,7 @@ public class Artykul {
     private String nazwaArtykulu;
     private double netto;
     private double vat;
-    private double brutto;
+    private double brutto = netto * (1+(vat/100));
     private String grupaArtykulu;
     private String jednostkaMagazynowa;
     private String sql;

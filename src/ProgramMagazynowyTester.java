@@ -82,8 +82,25 @@ public class ProgramMagazynowyTester {
         }catch(SQLException e) {
             e.printStackTrace();
         }*/
+        System.out.println("Witaj w programie magazynowym." +
+                "Wybierz co chcesz zrobić: \n" +
+                "1. Dodaj artykul\n" +
+                "2. Wyszukaj artykul\n");
+
+        int wybor = 0;
 
         Artykul art = new Artykul();
-        art.findArticle();
+        Scanner scan = new Scanner(System.in);
+        wybor = scan.nextInt();
+        switch (wybor) {
+            case 1:
+                art.addArticle();
+                break;
+            case 2:
+                art.findArticle();
+                break;
+            default:
+                System.out.println("Popraw wybór");
+        }
     }
 }
