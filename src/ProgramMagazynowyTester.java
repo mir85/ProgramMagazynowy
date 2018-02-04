@@ -12,27 +12,8 @@ public class ProgramMagazynowyTester {
 
     public static void main(String[] args) {
 
-        Scanner skaner = new Scanner(System.in);
-        System.out.print("Podaj nazwe artykulu: ");
-        Artykul artykul = new Artykul();
-        String nazwaArtykulu = skaner.nextLine();
-        artykul.setNazwaArtykulu(nazwaArtykulu);
-        System.out.print("Podaj cene netto artykulu: ");
-        double cenaNetto = skaner.nextDouble();
-        artykul.setNetto(cenaNetto);
-        System.out.print("Podaj stawke vat w %: ");
-        double vat = skaner.nextDouble();
-        artykul.setVat(vat);
-        System.out.print("Podaj grupe artykulu(duzymi literami): ");
-        String grupaArtykulu = skaner.next();
-        artykul.setGrupaArtykulu(grupaArtykulu);
-        System.out.print("Podaj jednostke: ");
-        String jednostka = skaner.next();
-        artykul.setJednostkaMagazynowa(jednostka);
 
-        double brutto = cenaNetto*(1+(vat/100));
-
-        String polaczenieURL = "jdbc:mysql://127.0.0.1/programmagazynowy?user=root&password=";
+        /*String polaczenieURL = "jdbc:mysql://127.0.0.1/programmagazynowy?user=root&password=";
         //Tworzymy proste zapytanie doa bazy danych
         String showResult = "Select * FROM artykul";
         //String addArticle = "Insert into artykul(nazwa, cena, vat, grupa artykulow, jednostka)" + "values(?, ?, ?, ?, ?)" ;
@@ -52,7 +33,6 @@ public class ProgramMagazynowyTester {
             ResultSet rs = stmt.executeQuery(showResult);
 
             PreparedStatement stmtAddArticle = conn.prepareStatement("INSERT INTO artykul(nazwa, cena_netto, vat, cena_brutto, grupa_artykulow, jednostka)" + "VALUES (?, ?, ?, ?, ?, ?)");
-            //ResultSet rsAddArticle = stmt.executeQuery(addArticle);
 
             stmtAddArticle.setString(1, nazwaArtykulu);
             stmtAddArticle.setDouble(2, cenaNetto);
@@ -86,17 +66,24 @@ public class ProgramMagazynowyTester {
     static void wyswietlDaneZBazy(ResultSet rs){
         try{
             daneZBazy = rs.getString(1);
-            System.out.println("\n" + daneZBazy + " ");
+            System.out.print("id: " + daneZBazy + "  ");
             daneZBazy = rs.getString(2);
-            System.out.println(daneZBazy + " ");
+            System.out.print("Nazwa: " + daneZBazy + "  ");
             daneZBazy = rs.getString(3);
-            System.out.println(daneZBazy);
+            System.out.print("Cena netto: " + daneZBazy + "  ");
+            daneZBazy = rs.getString(4);
+            System.out.print("VAT: " + daneZBazy + "  ");
+            daneZBazy = rs.getString(5);
+            System.out.print("Cena brutto: " + daneZBazy + "  ");
+            daneZBazy = rs.getString(6);
+            System.out.print("Grupa: " + daneZBazy + "  ");
+            daneZBazy = rs.getString(7);
+            System.out.print("Jednostka: " + daneZBazy);
         }catch(SQLException e) {
             e.printStackTrace();
-        }
+        }*/
+
+        Artykul art = new Artykul();
+        art.findArticle();
     }
-
-
-
-
 }
