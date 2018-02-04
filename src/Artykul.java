@@ -9,7 +9,7 @@ public class Artykul {
     private double brutto;
     private String grupaArtykulu;
     private String jednostkaMagazynowa;
-    private String sql;
+    private String sql, sql1;
     private String daneZBazy;
 
     Artykul(){
@@ -72,6 +72,8 @@ public class Artykul {
     }
 
     void wyswietlDaneZBazy(ResultSet rs) {
+
+
         try {
             daneZBazy = rs.getString(1);
             System.out.print("id: " + daneZBazy + "  ");
@@ -106,20 +108,34 @@ public class Artykul {
             Connection conn = DriverManager.getConnection(polaczenieURL);
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-
                 Statement stmt = conn.createStatement();
+                Statement stmt1 = conn.createStatement();
                 sql = "SELECT * FROM artykul WHERE nazwa = ('" + nazwaArtykulu + "');";
-                ResultSet rsFA = stmt.executeQuery(sql);
+                sql1 = "SELECT COUNT(*) AS count FROM artykul WHERE nazwa = ('" + nazwaArtykulu + "');";
+
+
 
                 try {
                     Artykul art = new Artykul();
                     art.nazwaArtykulu = nazwaArtykulu;
-                    while (rsFA.next()) {
-                        wyswietlDaneZBazy(rsFA);
+
+                    ResultSet rsFA1= stmt1.executeQuery(sql1);
+                    while (rsFA1.next()){
+                        int count = rsFA1.getInt(1);
+
+                        if (count < 1){
+                            System.out.println("Brak artykulu w bazie");
+                        }
+                        else{
+                            ResultSet rsFA = stmt.executeQuery(sql);
+                            rsFA.next();
+                            wyswietlDaneZBazy(rsFA);
+                        }
                     }
                 } catch (SQLException e) {
                     System.out.println("Uwaga! Problem z odczytem danych " + e);
                 }
+
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
