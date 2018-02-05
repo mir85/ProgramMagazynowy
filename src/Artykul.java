@@ -69,6 +69,7 @@ public class Artykul {
                             stmt.executeUpdate(sql);
                             skaner.close();
                             System.out.println("Dodano artykuł " + nazwaArtykulu);
+                            rsFA.close();
                         }
                         else{
                             System.out.println("Artykul juz jest w bazie");
@@ -142,16 +143,18 @@ public class Artykul {
                     art.nazwaArtykulu = nazwaArtykulu;
 
                     ResultSet rsFA3= stmt3.executeQuery(sql3);
-                    while (rsFA3.next()){
+                    ResultSet rsFA1 = stmt2.executeQuery(sql2);
+                    while (rsFA3.first()){
                         int count = rsFA3.getInt(1);
 
                         if (count < 1){
                             System.out.println("Brak artykulu w bazie");
+                            break;
                         }
                         else{
-                            ResultSet rsFA = stmt2.executeQuery(sql2);
-                            System.out.println(count);
-                            wyswietlDaneZBazy(rsFA);
+                            while (rsFA1.next()){
+                            wyswietlDaneZBazy(rsFA1);}
+                            rsFA1.close();
                         }
                     }
                 } catch (SQLException e) {
