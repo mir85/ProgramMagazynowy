@@ -85,7 +85,8 @@ public class ProgramMagazynowyTester {
         System.out.println("Witaj w programie magazynowym." +
                 "Wybierz co chcesz zrobić: \n" +
                 "1. Dodaj artykul\n" +
-                "2. Wyszukaj artykul\n");
+                "2. Wyszukaj artykul\n" +
+                "3. Usun artykul\n");
 
         int wybor = 0;
 
@@ -98,6 +99,9 @@ public class ProgramMagazynowyTester {
                 break;
             case 2:
                 art.findArticle();
+                break;
+            case 3:
+                art.removeArticle();
                 break;
             default:
                 System.out.println("Popraw wybór");
