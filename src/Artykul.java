@@ -5,7 +5,6 @@ public class Artykul {
 
     private String nazwaArtykulu;
     private double netto;
-    private double netto1;
     private double vat;
     private double brutto;
     private String grupaArtykulu;
@@ -13,36 +12,7 @@ public class Artykul {
     private String sql, sql1, sql2, sql3;
     private String daneZBazy;
 
-
-
-
-    Artykul(){
-
-        this.nazwaArtykulu = "";
-        this.netto = 0;
-        this.vat = 0;
-        this.brutto = 0;
-        this.grupaArtykulu = "";
-        this.jednostkaMagazynowa = "";
-    }
-
-    private void dodaj(){
-        System.out.print("Podaj cene netto artykulu: ");
-        netto = skaner.nextDouble();
-        System.out.print("Podaj stawke vat w %: ");
-        vat = skaner.nextDouble();
-        System.out.print("Podaj grupe artykulu: ");
-        grupaArtykulu = skaner.next().toUpperCase();
-        System.out.print("Podaj jednostke: ");
-        jednostkaMagazynowa = skaner.next();
-        skaner.close();
-    }
-
-    Scanner skaner = new Scanner(System.in);
-
     public void addArticle(){
-
-        Artykul art = new Artykul();
 
         Scanner skaner = new Scanner(System.in);
 
@@ -55,38 +25,42 @@ public class Artykul {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
 
-                PreparedStatement pstmt = conn.prepareStatement(sql);
+                Statement stmt = conn.createStatement();
                 Statement stmt1 = conn.createStatement();
 
-                sql = "INSERT INTO `artykul` (`nazwa`, `cena_netto`, `vat`, `cena_brutto`, `grupa_artykulow`, `jednostka`) VALUES (?, ?, ?, ?, ?, ?)";
-                sql1 = "SELECT COUNT(*) AS count FROM artykul WHERE nazwa = ('" + nazwaArtykulu + "');";
+                sql1 = "SELECT COUNT(*) FROM `artykul` WHERE `nazwa` = ('" + nazwaArtykulu + "');";
 
                 try {
+                    Artykul art = new Artykul();
+
                     ResultSet rsFA= stmt1.executeQuery(sql1);
-                        pstmt.setString(1, nazwaArtykulu);
-                        pstmt.setDouble(2, netto);
-                        pstmt.setDouble(3, vat);
-                        pstmt.setDouble(4, netto*(1+(vat/100)));
-                        pstmt.setString(5, grupaArtykulu);
-                        pstmt.setString(6, jednostkaMagazynowa);
+                    rsFA.next();
+                    int count = rsFA.getInt(1);
 
+                    if (count < 1){
+                        System.out.print("Podaj cene netto artykulu: ");
+                        netto = skaner.nextDouble();
+                        System.out.print("Podaj stawke vat w %: ");
+                        vat = skaner.nextDouble();
+                        System.out.print("Podaj grupe artykulu: ");
+                        grupaArtykulu = skaner.next().toUpperCase();
+                        System.out.print("Podaj jednostke: ");
+                        jednostkaMagazynowa = skaner.next();
+                        skaner.close();
 
-                        int count = rsFA.getInt(1);
+                        sql = "INSERT INTO `artykul` (`nazwa`, `cena_netto`, `vat`, `cena_brutto`, `grupa_artykulow`, `jednostka`) VALUES ('" + this.nazwaArtykulu + "','" + this.netto + "','" + this.vat + "','" + (this.brutto = this.netto * (1+(this.vat/100))) + "','" + this.grupaArtykulu + "','" + this.jednostkaMagazynowa + "');";                sql1 = "SELECT COUNT(*) FROM `artykul` WHERE `nazwa` = ('" + nazwaArtykulu + "');";
 
-                        if (count < 1){
-                            art.dodaj();
-                            pstmt.executeUpdate(sql);
-                            skaner.close();
-                            System.out.println("Dodano artykuł " + nazwaArtykulu);
-                            rsFA.close();
+                        stmt.executeUpdate(sql);
                         }
                         else{
-                            System.out.println("Artykul juz jest w bazie");
-                        }
+
+                        System.out.println("Artykul jest juz w bazie");
+                        rsFA.close();
+                    }
                 }
-                    catch (SQLException e) {
+                catch (SQLException e) {
                     System.out.println("Uwaga! Problem z wczytaniem danych " + e);
-            }
+                }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -96,6 +70,8 @@ public class Artykul {
         }
 
     }
+
+    Scanner skaner = new Scanner(System.in);
 
     public void removeArticle(){
 
