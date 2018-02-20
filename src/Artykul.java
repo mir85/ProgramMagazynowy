@@ -4,9 +4,6 @@ import java.util.Scanner;
 public class Artykul {
 
     private String nazwaArtykulu;
-    private double netto;
-    private double vat;
-    private double brutto;
     private String grupaArtykulu;
     private String jednostkaMagazynowa;
     private String sql, sql1, sql2, sql3;
@@ -31,24 +28,19 @@ public class Artykul {
                 sql1 = "SELECT COUNT(*) FROM `artykul` WHERE `nazwa` = ('" + nazwaArtykulu + "');";
 
                 try {
-                    Artykul art = new Artykul();
-
                     ResultSet rsFA= stmt1.executeQuery(sql1);
                     rsFA.next();
                     int count = rsFA.getInt(1);
 
                     if (count < 1){
                         System.out.print("Podaj cene netto artykulu: ");
-                        netto = skaner.nextDouble();
-                        System.out.print("Podaj stawke vat w %: ");
-                        vat = skaner.nextDouble();
                         System.out.print("Podaj grupe artykulu: ");
                         grupaArtykulu = skaner.next().toUpperCase();
                         System.out.print("Podaj jednostke: ");
                         jednostkaMagazynowa = skaner.next();
                         skaner.close();
 
-                        sql = "INSERT INTO `artykul` (`nazwa`, `cena_netto`, `vat`, `cena_brutto`, `grupa_artykulow`, `jednostka`) VALUES ('" + this.nazwaArtykulu + "','" + this.netto + "','" + this.vat + "','" + (this.brutto = this.netto * (1+(this.vat/100))) + "','" + this.grupaArtykulu + "','" + this.jednostkaMagazynowa + "');";                sql1 = "SELECT COUNT(*) FROM `artykul` WHERE `nazwa` = ('" + nazwaArtykulu + "');";
+                        sql = "INSERT INTO `artykul` (`nazwa`, `grupa_artykulow`, `jednostka`) VALUES ('" + nazwaArtykulu + "','" + grupaArtykulu + "','" + jednostkaMagazynowa + "');";                sql1 = "SELECT COUNT(*) FROM `artykul` WHERE `nazwa` = ('" + nazwaArtykulu + "');";
 
                         stmt.executeUpdate(sql);
                         }
@@ -70,8 +62,6 @@ public class Artykul {
         }
 
     }
-
-    Scanner skaner = new Scanner(System.in);
 
     public void removeArticle(){
 
@@ -110,9 +100,6 @@ public class Artykul {
                         rsFA.close();
                     }
                     art.nazwaArtykulu = nazwaArtykulu;
-                    art.netto = netto;
-                    art.vat = vat;
-                    art.brutto = netto*(1+(vat/100));
                     art.grupaArtykulu = grupaArtykulu;
                     art.jednostkaMagazynowa = jednostkaMagazynowa;
                 }
@@ -138,14 +125,8 @@ public class Artykul {
             daneZBazy = rs.getString(2);
             System.out.print("Nazwa: " + daneZBazy + "  ");
             daneZBazy = rs.getString(3);
-            System.out.print("Cena netto: " + daneZBazy + "  ");
-            daneZBazy = rs.getString(4);
-            System.out.print("VAT: " + daneZBazy + "  ");
-            daneZBazy = rs.getString(5);
-            System.out.print("Cena brutto: " + daneZBazy + "  ");
-            daneZBazy = rs.getString(6);
             System.out.print("Grupa: " + daneZBazy + "  ");
-            daneZBazy = rs.getString(7);
+            daneZBazy = rs.getString(4);
             System.out.print("Jednostka: " + daneZBazy);
         } catch (SQLException e) {
             e.printStackTrace();

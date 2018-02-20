@@ -82,7 +82,7 @@ public class ProgramMagazynowyTester {
         }catch(SQLException e) {
             e.printStackTrace();
         }*/
-        System.out.println("Witaj w programie magazynowym." +
+        System.out.println("Witaj w programie magazynowym. " +
                 "Wybierz co chcesz zrobić: \n" +
                 "1. Dodaj artykul\n" +
                 "2. Wyszukaj artykul\n" +
