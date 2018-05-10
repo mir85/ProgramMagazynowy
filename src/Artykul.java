@@ -6,8 +6,8 @@ public class Artykul {
     private String nazwaArtykulu;
     private String grupaArtykulu;
     private String jednostkaMagazynowa;
-    private String sql, sql1, sql2, sql3;
-    private String daneZBazy;
+    private String sql;
+    private String sql1;
 
     public void addArticle(){
 
@@ -71,7 +71,8 @@ public class Artykul {
         nazwaArtykulu = skaner.nextLine();
 
         try {
-            String polaczenieURL = "jdbc:mysql://127.0.0.1/programmagazynowy?user=root&password=";
+            String polaczenieURL;
+            polaczenieURL = "jdbc:mysql://127.0.0.1/programmagazynowy?user=root&password=";
             Connection conn = DriverManager.getConnection(polaczenieURL);
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -116,11 +117,11 @@ public class Artykul {
 
     }
 
-    void wyswietlDaneZBazy(ResultSet rs) {
+    private void wyswietlDaneZBazy(ResultSet rs) {
 
 
         try {
-            daneZBazy = rs.getString(1);
+            String daneZBazy = rs.getString(1);
             System.out.print("id: " + daneZBazy + "  ");
             daneZBazy = rs.getString(2);
             System.out.print("Nazwa: " + daneZBazy + "  ");
@@ -149,8 +150,8 @@ public class Artykul {
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement stmt2 = conn.createStatement();
                 Statement stmt3 = conn.createStatement();
-                sql2 = "SELECT * FROM artykul WHERE nazwa = ('" + nazwaArtykulu + "');";
-                sql3 = "SELECT COUNT(*) FROM artykul WHERE nazwa = ('" + nazwaArtykulu + "');";
+                String sql2 = "SELECT * FROM artykul WHERE nazwa = ('" + nazwaArtykulu + "');";
+                String sql3 = "SELECT COUNT(*) FROM artykul WHERE nazwa = ('" + nazwaArtykulu + "');";
 
                 try {
                     Artykul art = new Artykul();
